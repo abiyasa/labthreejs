@@ -1,0 +1,37 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.4em;
+    background: #eaeaea url('bg.png');
+    color: #4d4d4d;
+    width: 550px;
+    margin: 0 auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    -ms-font-smoothing: antialiased;
+    -o-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+}
+
+#container {
+    background: rgba(255, 255, 255, 0.9);
+    width: 500px;
+    margin: 130px auto;
+    padding: 20px;
+    border: 1px solid #ccc;    
+    position: relative;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2),
+                0 25px 50px 0 rgba(0, 0, 0, 0.15);
+}
+
+#viewport {
+    background: rgba(64, 64, 64, 0.1);
+    width: 100%;
+}
