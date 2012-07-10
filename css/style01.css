@@ -7,7 +7,7 @@ body {
 body {
     font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.4em;
-    background: #eaeaea url('bg.png');
+    background: #eaeaea url('cubes.png');    
     color: #4d4d4d;
     width: 550px;
     margin: 0 auto;
@@ -21,7 +21,7 @@ body {
 #container {
     background: rgba(255, 255, 255, 0.9);
     width: 500px;
-    margin: 130px auto;
+    margin: 130px auto 50px;
     padding: 20px;
     border: 1px solid #ccc;    
     position: relative;
@@ -29,9 +29,25 @@ body {
     border-top-right-radius: 2px;
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2),
                 0 25px 50px 0 rgba(0, 0, 0, 0.15);
+    color: inherit;
+}
+
+#container a {
+    color: inherit;
 }
 
 #viewport {
     background: rgba(64, 64, 64, 0.1);
     width: 100%;
+}
+
+#info {
+    color: #a6a6a6;
+    font-size: 12px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+    text-align: center;
+}
+
+#info a {
+    color: inherit;
 }
