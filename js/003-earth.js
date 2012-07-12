@@ -5,6 +5,7 @@ $(function () {
     'use strict';
     var camera, scene, renderer, light;
     var earthMesh, shadowPlane;
+    var pivotX, pivotY, cameraTargetPos;
 
     function init() {
         var viewportWidth = 500;
@@ -36,7 +37,7 @@ $(function () {
             overdraw: true
         });
         shadowPlane = new THREE.Mesh(geometry, material);
-        shadowPlane.position.y = - 250;
+        shadowPlane.position.y = -250;
 
         scene.add(shadowPlane);
 
@@ -48,17 +49,35 @@ $(function () {
         scene.add(light);
 
         // prepare renderer
-        renderer = new THREE.CanvasRenderer();
-        //renderer = new THREE.WebGLRenderer();
+        var useCanvas = true;
+        if (useCanvas) {
+            renderer = new THREE.CanvasRenderer();
+        } else {
+            renderer = new THREE.WebGLRenderer();
+        }
         renderer.setSize(viewportWidth, viewportHeight);
 
         // show renderer
         var $container = $('#viewport');
         $container.append(renderer.domElement);
+
+        // handle mouse
+        var offset = $container.offset();
+        pivotX = offset.left + (viewportWidth * 0.5);
+        pivotY = offset.top + (viewportHeight * 0.5);
+        cameraTargetPos = new THREE.Vector3(1, 0, 0);
+        $container.mousemove(onMouseMove);
+    }
+
+    // change camera target when moving
+    function onMouseMove(event) {
+        cameraTargetPos.x = pivotX - event.pageX;
+        cameraTargetPos.y = event.pageY - pivotY;
     }
 
     function render() {
-        // TODO handle mouse click
+        // update camera based on position
+        camera.lookAt(cameraTargetPos);
 
         // rotate mesh
         earthMesh.rotation.y += 0.02;
