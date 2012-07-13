@@ -10,6 +10,7 @@ $(function () {
 
     var VIEWPORT_WIDTH = 500;
     var VIEWPORT_HEIGHT = 300;
+    var USE_CANVAS = true;
 
     // init everything
     function init() {
@@ -29,8 +30,7 @@ $(function () {
         scene.add(light);
 
         // prepare renderer
-        var useCanvas = true;
-        if (useCanvas) {
+        if (USE_CANVAS) {
             renderer = new THREE.CanvasRenderer();
         } else {
             renderer = new THREE.WebGLRenderer();
