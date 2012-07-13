@@ -1,17 +1,4 @@
-// Converted from: ../files/srcModels/02_life_soup/birds_A/eagle/eagle_flyA_v020/obj/eagle_flyA_001.obj
-//  vertices: 315
-//  faces: 626
-//  normals: 0
-//  colors: 5
-//  uvs: 315
-//  materials: 1
-//  edges: 0
-//
-//  Generated with OBJ -> Three.js converter
-//  http://github.com/alteredq/three.js/blob/master/utils/exporters/convert_obj_three.py
-
-
-var model = {
+{
 
     "version" : 2,
     
@@ -69,7 +56,4 @@ var model = {
 
     "edges" : []
 
-};
-
-postMessage( model );
-close();
+}
