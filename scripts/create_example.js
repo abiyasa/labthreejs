@@ -1,0 +1,57 @@
+/*jslint vars: true, plusplus: true, devel: true, nomen: true, indent: 4, forin: true, maxerr: 50, regexp: true */
+/*global require, console, process */
+
+/**
+ * Module dependencies.
+ */
+var program = require('commander'),
+    fs = require('fs'),
+    handlebars = require('Handlebars');
+
+// Configuration
+program
+    .version('0.1')
+    .option('-o, --output <filename>', 'generate html and javascript with <filename>')
+    .parse(process.argv);
+
+var FILE_ENCODING = 'utf-8';
+
+var config = [
+    {
+        type: 'js',
+        templateFile: 'template.js',
+        targetPath: '../js/'
+    },
+    {
+        type: 'html',
+        templateFile: 'template.html',
+        targetPath: '../'
+    }
+];
+
+// starts
+var filename = program.output;
+if (!filename) {
+    console.log('nothing to do');
+} else {
+    console.log('will generate file %s', filename);
+
+    // TODO validate filename, remove .js or .html
+
+    var configNum = config.length;
+    var i;
+    for (i = 0; i < configNum; i++) {
+        var configData = config[i];
+
+        // read the templates
+        console.log('compiling template %s', configData.templateFile);
+        var rawTemplate = fs.readFileSync(configData.templateFile, FILE_ENCODING);
+        var template = handlebars.compile(rawTemplate);
+
+        // write the files
+        var targetPath = configData.targetPath + filename + '.' + configData.type;
+        fs.writeFileSync(targetPath, template({ 'filename': filename }), FILE_ENCODING);
+        console.log('file %s is generated', targetPath);
+    }
+}
+
