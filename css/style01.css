@@ -37,7 +37,7 @@ body {
 }
 
 #viewport {
-    background: rgba(64, 64, 64, 0.1);
+    background-color: rgba(64, 64, 64, 0.1);
     width: 100%;
 }
 

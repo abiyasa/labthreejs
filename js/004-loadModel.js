@@ -54,17 +54,32 @@ $(function () {
     function loadModel() {
         console.log('loadModel()');
 
-        // TODO show loader animation
+        setAnimationLoader(true);
+
         var loader = new THREE.JSONLoader();
         loader.load(
             /*'assets/models/flamingo.js',*/
             'assets/models/eagle.js',
-            function (g) {
-                createModel(g);
-
-                // TODO stop loader animation
+            function (loadedGeometry) {
+                createModel(loadedGeometry);
+                setAnimationLoader(false);
             }
         );
+    }
+
+    // play or stop animation loader
+    function setAnimationLoader(play) {
+        if (play) {
+            $container.css({
+                'background-image': 'url(assets/loader.gif)',
+                'background-position': 'center',
+                'background-repeat': 'no-repeat'
+            });
+        } else {
+            $container.css({
+                'background-image': ''
+            });
+        }
     }
 
     // create model from the loaded geometry
