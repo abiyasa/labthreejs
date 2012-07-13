@@ -58,7 +58,6 @@ $(function () {
 
         var loader = new THREE.JSONLoader();
         loader.load(
-            /*'assets/models/flamingo.js',*/
             'assets/models/eagle.js',
             function (loadedGeometry) {
                 createModel(loadedGeometry);
@@ -86,11 +85,13 @@ $(function () {
     function createModel(geometry) {
         console.log('createModel()');
         var material = new THREE.MeshBasicMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/textures/cardboard-512.png'),
+            map: THREE.ImageUtils.loadTexture('assets/textures/cardboard-brown-512.png'),
             doubleSided: false,
-            color: 0xffffff
+            color: 0xffffff,
+            overdraw: true
         });
         model = new THREE.Mesh(geometry, material);
+        model.scale.set(2, 2, 2);
         scene.add(model);
     }
 
