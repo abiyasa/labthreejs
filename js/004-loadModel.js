@@ -52,23 +52,26 @@ $(function () {
 
     // load model async
     function loadModel() {
+        console.log('loadModel()');
+
         // TODO show loader animation
         var loader = new THREE.JSONLoader();
-        loader.load({
-            model: 'assets/models/eagle.js',
-            callback: function (g) {
-                console.log('model loaded');
+        loader.load(
+            /*'assets/models/flamingo.js',*/
+            'assets/models/eagle.js',
+            function (g) {
                 createModel(g);
 
-                // TODO remove loader animation
+                // TODO stop loader animation
             }
-        });
+        );
     }
 
     // create model from the loaded geometry
     function createModel(geometry) {
+        console.log('createModel()');
         var material = new THREE.MeshBasicMaterial({
-            map: THREE.ImageUtils.loadTexture('assets/textures/cardboard-512.jpg'),
+            map: THREE.ImageUtils.loadTexture('assets/textures/cardboard-512.png'),
             doubleSided: false,
             color: 0xffffff
         });
@@ -80,7 +83,7 @@ $(function () {
     function updateModel() {
         if (model) {
             model.rotation.y += 0.02;
-        }    
+        }
     }
 
     // render model and scene
