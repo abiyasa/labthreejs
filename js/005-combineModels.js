@@ -6,13 +6,14 @@ $(function () {
     var scene, camera, renderer;
     var light;
     var modelContainer;
+    var loader;
     var $container;
 
     var modelData = [];
 
     var VIEWPORT_WIDTH = 500;
     var VIEWPORT_HEIGHT = 300;
-    var USE_CANVAS = true;
+    var USE_CANVAS = false;
 
     // init everything
     function init() {
@@ -53,47 +54,42 @@ $(function () {
             overdraw: true
         });
         var shadowPlane = new THREE.Mesh(geometry, material);
-        shadowPlane.position.y = -250;
+        shadowPlane.position.y = -350;
         scene.add(shadowPlane);
 
         // init model data
-        modelData.push({ 'modelFile': 'assets/models/eagle.js', 'materialFile': 'assets/textures/cardboard-brown-512.png', 'posY': 0 });
-        modelData.push({ 'modelFile': 'assets/models/flamingo.js', 'materialFile': 'assets/textures/cardboard-512.png', 'posY': 50 });
+        modelData.push({ 'modelFile': 'assets/models/eagle.js', 'materialFile': 'assets/textures/cardboard-brown-512.png', 'posX': 100, 'posY': 150 });
+        modelData.push({ 'modelFile': 'assets/models/flamingo.js', 'materialFile': 'assets/textures/cardboard-512.png', 'posX': -100, 'posY': 0 });
 
         // prepare model container
         modelContainer = new THREE.Object3D();
         scene.add(modelContainer);
 
-        loadModels();
+        // load models
+        loader = new THREE.JSONLoader();
+        var numOfModels = modelData.length;
+        var i;
+        for (i = 0; i < numOfModels; i++) {
+            loadModel(modelData[i]);
+        }
     }
 
     // load models from model list
-    function loadModels() {
+    function loadModel(theModelData) {
+        // load the model
+        console.log('loading model %s', theModelData.modelFile);
+        loader.load(theModelData.modelFile, function (loadedGeometry) {
+            theModelData.geometry = loadedGeometry;
 
-        var loader = new THREE.JSONLoader();
+            buildModel(theModelData);
+        });
 
-        // trigger models inside model list
-        var numOfModels = modelData.length;
-        var theModel;
-        var i;
-        for (i = 0; i < numOfModels; i++) {
-            theModel = modelData[i];
-
-            // load the model
-            console.log('loading model %s', theModel.modelFile);
-            loader.load(theModel.modelFile, function (loadedGeometry) {
-                theModel.geometry = loadedGeometry;
-
-                buildModel(theModel);
-            });
-
-            // load the material
-            console.log('loading material %s', theModel.materialFile);
-            theModel.material = new THREE.MeshBasicMaterial({
-                map: THREE.ImageUtils.loadTexture(theModel.materialFile),
-                overdraw: true
-            });
-        }
+        // load the material
+        console.log('loading material %s', theModelData.materialFile);
+        theModelData.material = new THREE.MeshBasicMaterial({
+            map: THREE.ImageUtils.loadTexture(theModelData.materialFile),
+            overdraw: true
+        });
     }
 
     // create mesh and insert into model container
@@ -101,8 +97,9 @@ $(function () {
         console.log('creating model with posY=%d', theModelData.posY);
 
         var modelMesh = new THREE.Mesh(theModelData.geometry, theModelData.material);
+        modelMesh.position.x = theModelData.posX;
         modelMesh.position.y = theModelData.posY;
-        modelMesh.scale.set(2, 2, 2);
+        modelMesh.scale.set(3, 3, 3);
 
         modelContainer.add(modelMesh);
     }
